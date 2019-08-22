@@ -37,12 +37,6 @@ class App extends React.Component {
             <div className="logo" />
             <Menu theme="dark" mode="inline">
               <Menu.Item key="1">
-                <Link to={`/`}>
-                  <Icon type="user" />
-                  <span className="nav-text">Dashboard</span>
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="2">
                 <Link to={`/clients`}>
                   <Icon type="user" />
                   <span className="nav-text">Clients</span>

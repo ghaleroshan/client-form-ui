@@ -28,7 +28,6 @@ export default class clientForm extends React.Component {
             address: "",
             phone: "",
             email:"",
-            redirect: false
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -161,11 +160,7 @@ export default class clientForm extends React.Component {
                                     }
                                 ]
                             })(
-                                <TextArea
-                                    name={"address"}
-                                    autosize={{ minRows: 2, maxRows: 6 }}
-                                />
-
+                                <Input name={"address"} />
                             )}
                         </Form.Item>
                         <Form.Item label={"Phone No"}>

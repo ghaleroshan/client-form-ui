@@ -3,8 +3,6 @@ import { Router, Route, Switch, Redirect } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import App from "../Containers/App";
 import Login from "../Containers/Login";
-import clientList from "../Components/clientsList";
-import clientForm from "../Components/clientForm";
 import clients from "../Pages/clients";
 
 

@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import { Form, Icon, Input, Button, Checkbox, Row, Col } from "antd";
 import axios from "axios";
 import Logo from "../images/Logo.png";
+import auth from "../auth";
 
 class Login extends React.Component {
     constructor() {
@@ -16,6 +17,25 @@ class Login extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    authentication() {
+        auth.login(() => {
+            this.setState({
+                redirectToReferrer: true
+            });
+            const
+                { from } = this.props.location.state || { from: { pathname: "/" } };
+            this.props.history.push(from);
+        });
+    }
+
+    componentWillMount() {
+        if (auth.isAuthenticated()) {
+            this.setState({
+                redirectToReferrer: true
+            });
+        }
+    }
+
     async handleSubmit(e) {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
@@ -25,7 +45,7 @@ class Login extends React.Component {
         });
         try {
             const response = await axios.post(
-                "https://respos-api-pvjdheicmq-uc.a.run.app/api/login",
+                "https://codingtask-tzcgzquzfq-an.a.run.app/api/auth/login",
                 {
                     email: this.state.email
                 }
