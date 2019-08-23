@@ -17,10 +17,9 @@ import {
 } from "antd";
 import axios from "axios";
 
-
 export default class clientForm extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             full_name: "",
             age: "",
@@ -30,9 +29,13 @@ export default class clientForm extends React.Component {
             email:"",
             redirect: false
         };
+        this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    handleChange(event) {
+        this.setState({gender: event.target.value})
+    }
     async handleSubmit(e) {
         e.preventDefault();
         console.log(this.props.form.getFieldsValue());
@@ -64,6 +67,7 @@ export default class clientForm extends React.Component {
             console.log(error);
         }
     }
+
 
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -104,7 +108,6 @@ export default class clientForm extends React.Component {
         };
 
         const gender = ["Female", "Male", "Other"];
-
         return (
             <Row>
                 <Col xs={24}>
@@ -161,11 +164,7 @@ export default class clientForm extends React.Component {
                                     }
                                 ]
                             })(
-                                <TextArea
-                                    name={"address"}
-                                    autosize={{ minRows: 2, maxRows: 6 }}
-                                />
-
+                                <Input name={"address"}/>
                             )}
                         </Form.Item>
                         <Form.Item label={"Phone No"}>
