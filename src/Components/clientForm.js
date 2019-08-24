@@ -17,12 +17,11 @@ import {
 } from "antd";
 import axios from "axios";
 
-
 export default class clientForm extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
-            full_name: "",
+            fullName: "",
             age: "",
             gender: "",
             address: "",
@@ -33,29 +32,32 @@ export default class clientForm extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    handleChange(event) {
+        this.setState({gender: event.target.value})
+    }
     async handleSubmit(e) {
         e.preventDefault();
         console.log(this.props.form.getFieldsValue());
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                this.state.full_name = values.name;
+                this.state.fullName = values.fullName;
                 this.state.age = values.age;
                 this.state.gender = values.gender;
-                this.state.address = values.address;
                 this.state.phone = values.phone;
                 this.state.email = values.email;
+                this.state.address = values.address;
             }
         });
         try {
             const response = await axios.post(
-                "https://codingtask-tzcgzquzfq-an.a.run.app/api/clients",
+                "https://client-form-api-tmwszumhna-uc.a.run.app/api/clients",
                 {
-                    full_name: this.state.full_name,
+                    fullName: this.state.fullName,
                     age: this.state.age,
                     gender: this.state.gender,
-                    address: this.state.address,
                     phone: this.state.phone,
-                    email: this.state.email
+                    email: this.state.email,
+                    address: this.state.address
                 }
             );
 
@@ -64,6 +66,7 @@ export default class clientForm extends React.Component {
             console.log(error);
         }
     }
+
 
     render() {
         const { getFieldDecorator } = this.props.form;
@@ -103,8 +106,6 @@ export default class clientForm extends React.Component {
             }
         };
 
-        const gender = ["Female", "Male", "Other"];
-
         return (
             <Row>
                 <Col xs={24}>
@@ -113,14 +114,14 @@ export default class clientForm extends React.Component {
                 <Col xs={24} style={{ maxWidth: "600px" }}>
                     <Form {...formItemLayout} onSubmit={this.handleSubmit}>
                         <Form.Item label={"Full Name"}>
-                            {getFieldDecorator("full_name", {
+                            {getFieldDecorator("fullName", {
                                 rules: [
                                     {
                                         required: true,
                                         message: "Please input the full name."
                                     }
                                 ]
-                            })(<Input name={"full_name"} />)}
+                            })(<Input placeholder={"Please provide your full name"} name={"fullName"} />)}
                         </Form.Item>
 
                         <Form.Item label={"Age"}>
@@ -131,7 +132,7 @@ export default class clientForm extends React.Component {
                                         message: "Please provide the age."
                                     }
                                 ]
-                            })(<Input name={"age"} />)
+                            })(<Input placeholder={"Please provide your Age"} name = {"age"} />)
                             }
                         </Form.Item>
                         <Form.Item label={"Gender"}>
@@ -143,12 +144,13 @@ export default class clientForm extends React.Component {
                                     }
                                 ]
                             })(
-                                <Select name={"gender"}>
-                                    {gender.map((item, index) => (
-                                        <Option key={`${item}${index}`} value={index}>
-                                            {item}
-                                        </Option>
-                                    ))}
+                                <Select
+                                    placeholder="Select your gender"
+                                    onChange={this.handleSelectChange}
+                                >
+                                    <Option value="Male">Male</Option>
+                                    <Option value="Female">Female</Option>
+                                    <Option value="Others">Others</Option>
                                 </Select>
                             )}
                         </Form.Item>
@@ -161,11 +163,7 @@ export default class clientForm extends React.Component {
                                     }
                                 ]
                             })(
-                                <TextArea
-                                    name={"address"}
-                                    autosize={{ minRows: 2, maxRows: 6 }}
-                                />
-
+                                <Input placeholder={"Please provide your full address"} name = {"address"}/>
                             )}
                         </Form.Item>
                         <Form.Item label={"Phone No"}>
@@ -176,7 +174,7 @@ export default class clientForm extends React.Component {
                                         message: "Please provide your phone number."
                                     }
                                 ]
-                            })(<Input name={"phone"} />)}
+                            })(<Input placeholder={"Please provide your phone number"} name={"phone"} />)}
                         </Form.Item>
                         <Form.Item label={"Email"}>
                             {getFieldDecorator("email", {
@@ -190,7 +188,7 @@ export default class clientForm extends React.Component {
                                 <Input
                                     type={"email"}
                                     name={"email"}
-                                    placeholder={"Enter email"}
+                                    placeholder={"Please Enter your email address"}
                                 />
                             )}
                         </Form.Item>

@@ -13,10 +13,10 @@ const columns = [
     },
     {
         title: "Full Name",
-        dataIndex: "full name",
-        key: "full name",
+        dataIndex: "fullName",
+        key: "fullName",
         render: (text, record) => (
-            <span>{record.full_name}</span>
+            <span>{record.fullName}</span>
         )},
     {
         title: "Age",
@@ -69,7 +69,7 @@ export default class ClientsList extends React.Component {
     async componentDidMount() {
         try {
             const res = await axios.get(
-                "https://codingtask-tzcgzquzfq-an.a.run.app/api/clients",
+                "https://client-form-api-tmwszumhna-uc.a.run.app/api/clients",
                 {
                     timeout
                 }
